@@ -18,7 +18,7 @@ list_of_files = [
     f"src/{project_name}/exception.py",
     f"src/{project_name}/utils.py",
     f"notebooks/eda.ipynb",
-    f"notebooks/model_trails.ipynb"
+    f"notebooks/model_trails.ipynb",
     "setup.py",
     "requirements.txt"
     ]
