@@ -3,8 +3,10 @@ pandas
 matplotlib
 seaborn
 tensorflow
+keras
 scikit-learn
 hyperas
 notebook
 wordcloud
+nltk
 -e .
