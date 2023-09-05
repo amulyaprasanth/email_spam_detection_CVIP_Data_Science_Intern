@@ -1,11 +1,13 @@
 import os
 import sys
-import pandas as pd
-from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
-from src.spamDetection.logger import logging
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
 from src.spamDetection.exception import CustomException
+from src.spamDetection.logger import logging
+
 
 @dataclass
 class DataIngestionConfig:
@@ -34,7 +36,7 @@ class DataIngestion:
             # Splitting the data into training and test splits
             train_set, test_set = train_test_split(data, test_size=0.2, random_state=42)
 
-
+            logging.info("Saving training and test datasets")
             # Saving training and test datafiles
             train_set.to_csv(self.data_ingestion_config.train_data_path, index=False, header=True)
             test_set.to_csv(self.data_ingestion_config.test_data_path, index=False, header=True)

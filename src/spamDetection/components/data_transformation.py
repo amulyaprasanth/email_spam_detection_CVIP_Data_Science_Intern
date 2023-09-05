@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-import numpy as np
 from sklearn.preprocessing import LabelEncoder
 
 from src.spamDetection.logger import logging
@@ -39,13 +38,12 @@ class DataTransformation:
             target_train_feature_arr = label_enc.fit_transform(target_train_feature_df)
             target_test_feature_arr = label_enc.transform(target_test_feature_df)
 
-            train_arr = np.c_[input_features_train_arr, target_train_feature_arr]
-            test_arr = np.c_[input_features_test_arr, target_test_feature_arr]
-
             logging.info("Data Transformation completed")
             return (
-                train_arr,
-                test_arr,
+                input_features_train_arr,
+                target_train_feature_arr,
+                input_features_test_arr,
+                target_test_feature_arr
             )
         except Exception as e:
             raise CustomException(e, sys)
