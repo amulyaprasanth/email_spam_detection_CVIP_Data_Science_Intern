@@ -29,7 +29,7 @@ class ModelTrainer:
     def create_and_train(self, train_sentences, train_labels,
                          test_sentences, test_labels,
                          epochs: int = 100,
-                         batch_size=32,
+                         batch_size=1,
                          early_stopping_patience=10,
                          summary: bool = False):
         try:

@@ -1,6 +1,6 @@
+import logging
 import os
 from pathlib import Path
-import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
 
@@ -20,9 +20,12 @@ list_of_files = [
     f"notebooks/eda.ipynb",
     f"notebooks/model_trails.ipynb",
     "setup.py",
+    "templates/index.html",
+    "templates/home.html",
+    "static/style.css",
+    "app.py",
     "requirements.txt"
-    ]
-
+]
 
 for filepath in list_of_files:
     filepath = Path(filepath)
@@ -33,7 +36,7 @@ for filepath in list_of_files:
 
         logging.info("Creating directory: {} for the file {}".format(filedir, filename))
 
-    if (not os.path.exists(filepath)) or (os.path.getsize(filepath)==0):
+    if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
         with open(filepath, "wb") as f:
             pass
 
