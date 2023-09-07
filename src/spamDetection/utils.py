@@ -13,11 +13,11 @@ from nltk.tokenize import word_tokenize
 from src.spamDetection.exception import CustomException
 
 # Download NLTK resources if not already downloaded
-# nltk.download('punkt')
+nltk.download('punkt')
 nltk.download('stopwords')
 
 
-# nltk.download('wordnet')
+nltk.download('wordnet')
 
 
 # Function for preprocessing nlp pipeline

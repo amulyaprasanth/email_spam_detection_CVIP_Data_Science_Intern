@@ -15,11 +15,11 @@ tf.random.set_seed(42)
 
 @dataclass
 class ModelTrainerConfig:
-    pretrained_model_path = os.path.join("artifacts", "pretrained_model.h5")
+    pretrained_model_path = os.path.join("artifacts", "pretrained_model.keras")
 
 
 MAX_VOCAB_LENGTH = 10000
-MAX_LEN = 15
+MAX_LEN = 25
 
 
 class ModelTrainer:
@@ -28,7 +28,7 @@ class ModelTrainer:
 
     def create_and_train(self, train_sentences, train_labels,
                          test_sentences, test_labels,
-                         epochs: int = 100,
+                         epochs: int = 1,
                          batch_size=1,
                          early_stopping_patience=10,
                          summary: bool = False):
@@ -74,7 +74,7 @@ class ModelTrainer:
             logging.info("Model Evaluation intitiated")
             logging.info("accuracy: {}%".format(round(model.evaluate(test_sentences, test_labels)[1] * 100, 2)))
             logging.info("Saving the model")
-            model.save(self.model_trainer_config.pretrained_model_path, model)
+            model.save(self.model_trainer_config.pretrained_model_path, save_format="keras")
             return model
 
         except Exception as e:
