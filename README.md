@@ -22,12 +22,13 @@ Email spam is a common problem, and this project aims to tackle it using machine
 To use the spam detection model, follow these steps:
 
 1. Go to the [demo website](https://email-spam-detection-qycu.onrender.com).
+2. Wait for some time, if the page doesn't load because the application will be inactive because of render free tier. So it will take time to fire up the application.
 
-2. Enter the text of the email you want to classify.
+3. Enter the text of the email you want to classify.
 
-3. Click the "Predict" button.
+4. Click the "Predict" button.
 
-4. The model will then predict whether the email is spam or not and display the result on the webpage.
+5. The model will then predict whether the email is spam or not and display the result on the webpage.
 
 ## Deployment
 
