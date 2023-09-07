@@ -15,7 +15,7 @@ tf.random.set_seed(42)
 
 @dataclass
 class ModelTrainerConfig:
-    pretrained_model_path = os.path.join("artifacts", "pretrained_model.keras")
+    pretrained_model_path = os.path.join("artifacts", "pretrained_model.h5")
 
 
 MAX_VOCAB_LENGTH = 10000
