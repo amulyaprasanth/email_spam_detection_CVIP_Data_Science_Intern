@@ -8,13 +8,14 @@ from keras import layers
 
 from src.spamDetection.exception import CustomException
 from src.spamDetection.logger import logging
+from src.spamDetection.utils import save_object
 
 tf.random.set_seed(42)
 
 
 @dataclass
 class ModelTrainerConfig:
-    pretrained_model_path = os.path.join("artifacts", "pretrained_model.h5")
+    pretrained_model_path = os.path.join("artifacts", "pretrained_model")
 
 
 MAX_VOCAB_LENGTH = 10000
@@ -28,11 +29,15 @@ class ModelTrainer:
     def create_and_train(self, train_sentences, train_labels,
                          test_sentences, test_labels,
                          epochs: int = 1,
-                         batch_size=1,
+                         batch_size=32,
                          early_stopping_patience=10,
                          summary: bool = False):
         try:
             logging.info("Creating model")
+            text_vectorizer = layers.TextVectorization(max_tokens=MAX_VOCAB_LENGTH,
+                                                       output_mode="int",
+                                                       output_sequence_length=MAX_LEN)
+            text_vectorizer.adapt(train_sentences)
             embedding = layers.Embedding(input_dim=MAX_VOCAB_LENGTH,
                                          output_dim=128,
                                          embeddings_initializer="uniform",
@@ -40,11 +45,16 @@ class ModelTrainer:
                                          name="embedding")
 
             # Build model with the Functional API
-            inputs = layers.Input(shape=(1,), dtype="string")
-            x = embedding(inputs)
-            x = layers.GlobalAveragePooling1D()(x)
-            outputs = layers.Dense(1, activation="sigmoid")(x)
-            model = tf.keras.Model(inputs, outputs, name="dense_model")
+            model = keras.Sequential()
+            model.add(layers.Input(shape=(1,), dtype="string"))
+            model.add(text_vectorizer)
+            model.add(embedding)
+            model.add(layers.LSTM(16))
+            model.add(layers.Dense(32, activation='relu'))
+            model.add(layers.Dense(1, activation='sigmoid'))
+
+            # Print the model summary
+            model.summary()
 
             logging.info("Compile the model")
             # compile the model
@@ -63,12 +73,13 @@ class ModelTrainer:
                       batch_size=batch_size,
                       validation_data=(test_sentences, test_labels),
                       callbacks=[keras.callbacks.EarlyStopping(patience=early_stopping_patience,
-                                                               restore_best_weights=True)])
+                                                               restore_best_weights=True,
+                                                               monitor='val_acc')])
             logging.info("Model training completed")
             logging.info("Model Evaluation intitiated")
             logging.info("accuracy: {}%".format(round(model.evaluate(test_sentences, test_labels)[1] * 100, 2)))
             logging.info("Saving the model")
-            model.save(self.model_trainer_config.pretrained_model_path, save_format="tf")
+            model.export(self.model_trainer_config.pretrained_model_path)
             return model
 
         except Exception as e:

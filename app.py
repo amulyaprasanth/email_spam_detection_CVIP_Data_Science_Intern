@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 
 from src.spamDetection.pipelines.predict_pipeline import CustomData, PredictPipeline
+from src.spamDetection.logger import logging
 
 app = Flask(__name__)
 
@@ -17,9 +18,9 @@ def predict_datapoint():
         data_df = data.get_data_as_dataframe()
         print("Generating predictions...")
         predict_pipeline = PredictPipeline()
-        preds = predict_pipeline.predict(data_df)
-        class_dict = {0: "Not Spam", "1": "Spam"}
-        return render_template('home.html', results=class_dict[int(preds[0])])
+        preds = predict_pipeline.predict(data_df).numpy()
+        class_dict = {0: "Not Spam", 1: "Spam"}
+        return render_template('home.html', results=class_dict[int(round(preds[0][0]))])
 
 
 if __name__ == '__main__':
