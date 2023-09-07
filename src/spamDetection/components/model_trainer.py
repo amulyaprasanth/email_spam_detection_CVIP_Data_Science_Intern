@@ -8,7 +8,6 @@ from keras import layers
 
 from src.spamDetection.exception import CustomException
 from src.spamDetection.logger import logging
-from src.spamDetection.utils import save_object
 
 tf.random.set_seed(42)
 
@@ -34,10 +33,6 @@ class ModelTrainer:
                          summary: bool = False):
         try:
             logging.info("Creating model")
-            text_vectorizer = layers.TextVectorization(max_tokens=MAX_VOCAB_LENGTH,
-                                                       output_mode="int",
-                                                       output_sequence_length=MAX_LEN)
-            text_vectorizer.adapt(train_sentences)
             embedding = layers.Embedding(input_dim=MAX_VOCAB_LENGTH,
                                          output_dim=128,
                                          embeddings_initializer="uniform",
@@ -46,8 +41,7 @@ class ModelTrainer:
 
             # Build model with the Functional API
             inputs = layers.Input(shape=(1,), dtype="string")
-            x = text_vectorizer(inputs)
-            x = embedding(x)
+            x = embedding(inputs)
             x = layers.GlobalAveragePooling1D()(x)
             outputs = layers.Dense(1, activation="sigmoid")(x)
             model = tf.keras.Model(inputs, outputs, name="dense_model")
@@ -74,7 +68,7 @@ class ModelTrainer:
             logging.info("Model Evaluation intitiated")
             logging.info("accuracy: {}%".format(round(model.evaluate(test_sentences, test_labels)[1] * 100, 2)))
             logging.info("Saving the model")
-            model.save(self.model_trainer_config.pretrained_model_path)
+            model.save(self.model_trainer_config.pretrained_model_path, save_format="tf")
             return model
 
         except Exception as e:

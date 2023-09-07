@@ -5,6 +5,8 @@ from sklearn.preprocessing import LabelEncoder
 from src.spamDetection.logger import logging
 from src.spamDetection.utils import *
 
+from keras.layers import TextVectorization
+
 
 @dataclass
 class DataTransformationConfig:
@@ -38,11 +40,19 @@ class DataTransformation:
             target_train_feature_arr = label_enc.fit_transform(target_train_feature_df)
             target_test_feature_arr = label_enc.transform(target_test_feature_df)
 
+            logging.info("Applying text vectorization")
+            text_vectorizer = TextVectorization(max_tokens=10000,
+                                                output_mode="int",
+                                                output_sequence_length=25)
+            text_vectorizer.adapt(input_features_train_arr)
+
+            train_sentences, test_sentences = text_vectorizer(input_features_train_arr), text_vectorizer(
+                input_features_test_arr)
             logging.info("Data Transformation completed")
             return (
-                input_features_train_arr,
-                target_train_feature_arr,
-                input_features_test_arr,
+                train_sentences,
+                target_train_feature_arr
+                test_sentences,
                 target_test_feature_arr
             )
         except Exception as e:
