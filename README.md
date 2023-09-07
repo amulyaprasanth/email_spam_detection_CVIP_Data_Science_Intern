@@ -1,3 +1,5 @@
+Certainly! Here's the README.md file in full Markdown format with the "Running Locally" section included:
+
 # Email Spam Detection Project
 
 This project uses TensorFlow to build a machine learning model for predicting whether an email is spam or not. The model has been deployed on the Render free tier, allowing users to classify emails as spam or not through a web interface.
@@ -7,6 +9,7 @@ This project uses TensorFlow to build a machine learning model for predicting wh
 - [Introduction](#introduction)
 - [Usage](#usage)
 - [Deployment](#deployment)
+- [Running Locally](#running-locally)
 - [Model Training](#model-training)
 - [Dataset](#dataset)
 - [Contributing](#contributing)
@@ -21,14 +24,13 @@ Email spam is a common problem, and this project aims to tackle it using machine
 
 To use the spam detection model, follow these steps:
 
-1. Go to the [demo website](https://email-spam-detection-qycu.onrender.com).
-2. Wait for some time, if the page doesn't load because the application will be inactive because of render free tier. So it will take time to fire up the application.
+1. Go to the [demo website](https://email-spam-detection-qycu.onrender.com/).
 
-3. Enter the text of the email you want to classify.
+2. Enter the text of the email you want to classify.
 
-4. Click the "Predict" button.
+3. Click the "Predict" button.
 
-5. The model will then predict whether the email is spam or not and display the result on the webpage.
+4. The model will then predict whether the email is spam or not and display the result on the webpage.
 
 ## Deployment
 
@@ -46,9 +48,40 @@ To deploy this project on Render:
 
 5. Access the public URL of your Render service to use the email spam detection tool.
 
+## Running Locally
+
+To run this project on your local machine, follow these steps:
+
+1. Clone this repository to your local machine.
+
+   ```bash
+   git clone [https://github.com/your-username/email-spam-detection.git](https://github.com/amulyaprasanth/email_spam_detection_CVIP_Data_Science_Intern)
+   cd email_spam_detection_CVIP_Data_Science_Intern
+   ```
+
+2. Create a virtual environment (optional but recommended).
+
+   ```bash
+   conda create -p venv/ python=3.10 -y
+   ```
+
+3. Install the project dependencies.
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Run the application locally.
+
+   ```bash
+   python app.py
+   ```
+
+5. Open your web browser and navigate to `http://localhost:5000` to access the email spam detection tool.
+
 ## Model Training
 
-The machine learning model used for email spam detection is trained on a labeled dataset. The training code and details can be found in the `notebooks/model_trails.ipynb` Jupyter Notebook in the project repository.
+The machine learning model used for email spam detection is trained on a labeled dataset. The training code and details can be found in the `train_model.ipynb` Jupyter Notebook in the project repository.
 
 ## Dataset
 
