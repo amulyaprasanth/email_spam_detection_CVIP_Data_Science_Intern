@@ -6,7 +6,7 @@ from src.spamDetection.components.model_trainer import ModelTrainerConfig
 from src.spamDetection.exception import CustomException
 from src.spamDetection.logger import logging
 from src.spamDetection.utils import load_object, preprocess_text
-
+from keras.models import load_model
 
 class PredictPipeline():
     def __init__(self):
@@ -17,7 +17,7 @@ class PredictPipeline():
             model_path = ModelTrainerConfig().pretrained_model_path
 
             logging.info("Loading model and preprocessor")
-            model = load_object(model_path)
+            model = load_model(model_path)
             print("Loading completed")
 
             print("Generating predictions...")
