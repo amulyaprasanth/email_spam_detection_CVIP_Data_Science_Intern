@@ -74,7 +74,7 @@ class ModelTrainer:
             logging.info("Model Evaluation intitiated")
             logging.info("accuracy: {}%".format(round(model.evaluate(test_sentences, test_labels)[1] * 100, 2)))
             logging.info("Saving the model")
-            model.save(self.model_trainer_config.pretrained_model_path, save_format="keras")
+            model.save(self.model_trainer_config.pretrained_model_path)
             return model
 
         except Exception as e:
