@@ -71,13 +71,18 @@ To run this project on your local machine, follow these steps:
    pip install -r requirements.txt
    ```
 
-4. Run the application locally.
+4. Activate the environment
+ ```bash
+   conda activate venv/
+   ```
+
+8. Run the application locally.
 
    ```bash
    python app.py
    ```
 
-5. Open your web browser and navigate to `http://localhost:5000` to access the email spam detection tool.
+9. Open your web browser and navigate to `http://localhost:5000` to access the email spam detection tool.
 
 ## Model Training
 
